@@ -1,0 +1,67 @@
+
+<html ng-app="example">
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+<script src="primus.js"></script>
+<script src="firegig.js"></script>
+
+<script>
+        // var data1 = new Firegig('ws://localhost:8001/vars/name');
+        // var data2 = new Firegig('ws://localhost:8001/vars/name/a/b/c');
+        // var data3 = new Firegig('ws://localhost:8001/vars/name/a');
+        // //data1.upsert('a', {'b': {'c' : {d : 2}}});
+        // //data2.upsert('d', 1);
+        // data3.upsert('x', 11);
+        // console.log(data1);
+        // console.log(data2);
+        // console.log(data3);
+</script>
+<script>
+var app = angular.module('example', []);
+
+    app.controller("Controller", ['$scope', function($scope){
+
+    $scope.data1 = new Firegig('http://localhost:8001/vars/name');
+    $scope.data2 = new Firegig('http://localhost:8001/vars/name');
+
+    $scope.data3 = new Firegig('http://localhost:8001/vars/surname');
+    $scope.data4 = new Firegig('http://localhost:8001/vars/surname');
+
+    $scope.aaaa = function() {
+        $scope.data1.upsert('first', $scope.data1.db_data.first);
+    }
+
+    $scope.bbbb = function() {
+        $scope.data2.upsert('first', $scope.data2.db_data.first);
+    }
+
+    $scope.cccc = function() {
+        $scope.data3.upsert('last', $scope.data3.db_data.last);
+    }
+
+    $scope.dddd = function() {
+        $scope.data4.del('last');
+    }
+    console.log($scope.data1);
+    console.log($scope.data2);
+
+  }]);
+
+</script>
+</head>
+<body>
+    <div ng-controller="Controller">
+
+        <input type="text" ng-model="data1.db_data.first" ng-change="aaaa()">
+        <input type="text" ng-model="data2.db_data.first" ng-change="bbbb()">
+<hr>
+<hr>
+<hr>
+        <input type="text" ng-model="data3.db_data.last" ng-change="cccc()">
+        <input type="text" ng-model="data4.db_data.last" ng-change="dddd()">
+
+    </div>
+</body>
+</html>
+
